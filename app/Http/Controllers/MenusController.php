@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\menus;
 
 class MenusController extends Controller
 {
     public function index()
     {
-        $menus = Menus::all();
+        $menus = menus::all();
+        //return $menus;
         return view('menus.index', compact('menus'));
     }
 
@@ -23,7 +25,7 @@ class MenusController extends Controller
             // Add other validation rules
         ]);
 
-        $menu = Menus::create($request->all());
+        $menu = menus::create($request->all());
         // Handle media upload if needed
         return redirect()->route('menus.index');
     }
