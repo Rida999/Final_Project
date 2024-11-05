@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menus; // Ensure the model is named with the correct casing
-use Illuminate\Http\Request; // Import the Request class
+use App\Models\Menus;
+use Illuminate\Http\Request;
 
 class MenusController extends Controller
 {
     // Display a listing of the resource
     public function index()
     {
-        $menus = menus::all();
+        $menus = Menus::all();
         return $menus;
         return view('menus.index', compact('menus'));
     }
@@ -25,28 +25,42 @@ class MenusController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            // Add other validation rules as needed
+            'store_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Menus::create($request->all());
+        $menuData = $request->all();
+
+        // Handle image upload if present
+        if ($request->hasFile('image')) {
+            $menuData['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        Menus::create($menuData);
         return redirect()->route('menus.index')->with('success', 'Menu created successfully.');
     }
-
 
     // Update the specified resource in storage
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            // Add other validation rules as needed
+            'store_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $menu = Menus::findOrFail($id);
-        $menu->update($request->all());
+        $menuData = $request->all();
 
+        // Handle image upload if present
+        if ($request->hasFile('image')) {
+            $menuData['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $menu->update($menuData);
         return redirect()->route('menus.index')->with('success', 'Menu updated successfully.');
     }
 
