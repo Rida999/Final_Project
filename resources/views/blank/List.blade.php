@@ -16,7 +16,8 @@
         <div class="content-header-right col-md-6 col-12">
             <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
                 <a class="btn btn-info box-shadow-2 px-2" href="{{ route('create') }}" role="button">
-                    <i class="fa-solid fa-plus"></i> Add
+                    <i class="fa-solid fa-plus"></i>
+                    Add
                 </a>
             </div>
         </div>
@@ -49,13 +50,38 @@
                                                     <a href="{{ route('menus.update', $menu->id) }}" class="icons warning">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" style="display:inline;">
+                                                    <!-- Delete Button -->
+                                                    <button type="button" class="icons danger" onclick="confirmDelete()">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+
+                                                    <!-- Hidden Form for Deletion -->
+                                                    <form id="delete-form" action="{{ route('menus.destroy', $menu->id) }}" method="POST" style="display:none;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="icons danger" onclick="return confirm('Are you sure you want to delete this menu?');">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
                                                     </form>
+
+                                                    <!-- SweetAlert2 Script -->
+                                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                                                    <script>
+                                                        function confirmDelete() {
+                                                            Swal.fire({
+                                                                title: 'Are you sure?',
+                                                                text: 'You won\'t be able to revert this!',
+                                                                icon: 'warning',
+                                                                showCancelButton: true,
+                                                                confirmButtonText: 'Yes, delete it!',
+                                                                cancelButtonText: 'Cancel',
+                                                            }).then((result) => {
+                                                                if (result.isConfirmed) {
+                                                                    // Submit the form to delete the menu
+                                                                    document.getElementById('delete-form').submit();
+                                                                }
+                                                            });
+                                                        }
+                                                    </script>
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -68,6 +94,9 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <div class="pagination-wrapper">
+                                    {{ $menus->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>

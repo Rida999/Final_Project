@@ -10,7 +10,7 @@ class MenusController extends Controller
     // Display a listing of the resource
     public function index()
     {
-        $menus = Menus::all();
+        $menus = Menus::paginate(10); 
         return view('blank.List', compact('menus'));
     }
 

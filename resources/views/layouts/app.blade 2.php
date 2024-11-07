@@ -39,9 +39,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('cms/app-assets/css/pages/invoice.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{asset('cms/custom/css/bas.css?v1')}}">
-    <!-- Add SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 </head>
 <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar"
