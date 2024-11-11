@@ -10,15 +10,14 @@ class MenusController extends Controller
     // Display a listing of the resource
     public function index()
     {
-        $menus = Menus::all();
-        return $menus;
-        return view('menus.index', compact('menus'));
+        $menus = Menus::paginate(10); 
+        return view('blank.List', compact('menus'));
     }
 
     // Show the form for creating a new resource
     public function create()
     {
-        return view('menus.create');
+        return view('blank.Add');
     }
 
     // Store a newly created resource in storage
