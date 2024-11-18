@@ -2,50 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SpecialOffers; // Ensure the model is imported
-use Illuminate\Http\Request; // Import the Request class
+use App\Models\SpecialOffers;
+use Illuminate\Http\Request;
 
 class SpecialOffersController extends Controller
 {
     // Display a listing of the resource
     public function index()
     {
-        $specialOffers = SpecialOffers::all();
-        return $specialOffers;
-        return view('special_offers.index', compact('specialOffers'));
+        $specialOffers = SpecialOffers::paginate(10); // Adjust the number per page
+        return view('pages.menu.SpecialOffers.Index', compact('specialOffers'));
     }
 
     // Show the form for creating a new resource
     public function create()
     {
-        return view('special_offers.create');
+        return view('pages.menu.SpecialOffers.AddItem'); // No need to pass menu items as dropdown is not needed
     }
 
     // Store a newly created resource in storage
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'discount_percentage' => 'required|numeric',
-            // Add other validation rules as needed
+            'discount' => 'required|numeric',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
 
-        SpecialOffers::create($request->all());
+        SpecialOffers::create([
+            'menu_item_id' => 1, // Set menu_item_id to 1
+            'discount' => $request->discount,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
+
         return redirect()->route('special_offers.index')->with('success', 'Special offer created successfully.');
     }
 
+    // Show the form for editing the specified resource
+    public function edit($id)
+    {
+        // Find the offer by ID
+        $specialOffer = SpecialOffers::findOrFail($id);
+
+        // Return the view with the special offer data
+        return view('pages.menu.SpecialOffers.EditItem', compact('specialOffer'));
+    }
 
     // Update the specified resource in storage
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'discount_percentage' => 'required|numeric',
-            // Add other validation rules as needed
+            'discount' => 'required|numeric',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
 
         $specialOffer = SpecialOffers::findOrFail($id);
-        $specialOffer->update($request->all());
+        $specialOffer->update([
+            'menu_item_id' => 1, // Set menu_item_id to 1
+            'discount' => $request->discount,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
 
         return redirect()->route('special_offers.index')->with('success', 'Special offer updated successfully.');
     }
@@ -59,5 +78,3 @@ class SpecialOffersController extends Controller
         return redirect()->route('special_offers.index')->with('success', 'Special offer deleted successfully.');
     }
 }
-
-
