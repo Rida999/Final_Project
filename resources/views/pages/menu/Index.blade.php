@@ -3,23 +3,30 @@
 
     <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2">
-            <h3 class="content-header-title">List Form</h3>
+            <h3 class="content-header-title">My Menu</h3>
             <div class="row breadcrumbs-top">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">List</a></li>
-                        <li class="breadcrumb-item active"><a href="#">List</a></li>
+                        <li class="breadcrumb-item"><a href="#">Menus</a></li>
+                        <li class="breadcrumb-item active"><a href="#">Menu</a></li>
                     </ol>
                 </div>
             </div>
         </div>
         <div class="content-header-right col-md-6 col-12">
-            <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
-                <a class="btn btn-info box-shadow-2 px-2" href="{{ route('create') }}" role="button">
+            <div class="btn-group float-md-right mx-2" role="group" aria-label="Button group with nested dropdown">
+                <a class="btn btn-info box-shadow-2 px-2" href="{{ route('menus.create') }}" role="button">
                     <i class="fa-solid fa-plus"></i>
                     Add
+                </a>                
+            </div>
+            <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                <a class="btn btn-info box-shadow-2 px-2" href="{{ route('special_offers.index') }}" role="button">
+                    <i class="fa-solid fa-tags"></i>
+                    Special Offers
                 </a>
             </div>
+            
         </div>
     </div>
     
@@ -29,11 +36,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">List form</h4>
+                            <h4 class="card-title">Menu Form</h4>
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
-                                <table class="table table-striped table-bordered file-export">
+                                <table class="table table-striped table-bordered file-export w-100">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -47,13 +54,13 @@
                                                 <td>{{ $menu->name }}</td>
                                                 <td>{{ $menu->description }}</td>
                                                 <td>
-                                                    <a href="{{ route('menus.update', $menu->id) }}" class="icons warning">
+                                                    <a href="{{ route('menus.edit', $menu->id) }}" class="icons warning">
                                                         <i class="fa-solid fa-pen-to-square"></i>
-                                                    </a>
+                                                    </a>                                                    
                                                     <!-- Delete Button -->
-                                                    <button type="button" class="icons danger" onclick="confirmDelete()">
+                                                    <button type="button" class="icons danger" onclick="confirmDelete()" style="border: none; background: transparent; padding: 0;">
                                                         <i class="fa-solid fa-trash"></i>
-                                                    </button>
+                                                    </button>                                                    
 
                                                     <!-- Hidden Form for Deletion -->
                                                     <form id="delete-form" action="{{ route('menus.destroy', $menu->id) }}" method="POST" style="display:none;">
