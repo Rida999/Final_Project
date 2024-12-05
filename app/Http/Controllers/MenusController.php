@@ -21,7 +21,7 @@ class MenusController extends Controller
     }
 
     // Store a newly created resource in storage
-    public function store(Request $request)
+    public function store(Request $request) //kamen mabede yeha bas bede index
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -50,7 +50,7 @@ class MenusController extends Controller
 
 
     // Update the specified resource in storage
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // i need update and delete
     {
         $request->validate([
             'name' => 'required|string|max:255',
