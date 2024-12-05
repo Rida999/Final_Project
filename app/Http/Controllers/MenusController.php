@@ -17,11 +17,11 @@ class MenusController extends Controller
     // Show the form for creating a new resource
     public function create()
     {
-        return view('blank.Add');
+        return view('blank.Add'); // am tredele view fa mabede yeha
     }
 
     // Store a newly created resource in storage
-    public function store(Request $request)
+    public function store(Request $request) //kamen mabede yeha bas bede index
     {
         $request->validate([
             'store_id' => 'required|integer',
@@ -42,7 +42,7 @@ class MenusController extends Controller
     }
 
     // Update the specified resource in storage
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // i need update and delete
     {
         $request->validate([
             'store_id' => 'required|integer',

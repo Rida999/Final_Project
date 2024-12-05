@@ -31,14 +31,19 @@
                   <img src="{{asset('cms/app-assets/images/avatar.jpg')}}" alt="avatar"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href=""><i class="ft-power"></i> logout</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="javascript:document.getElementById('logoutform').submit();"><i class="ft-power"></i> logout</a>
                         </div>
                     </li>
-
+s
                 </ul>
             </div>
         </div>
     </div>
 </nav>
+
+<form action="{{ route('logout') }}" method="POST" id="logoutform">
+    @csrf
+    <button type="submit" class="btn btn-danger">Logout</button>
+</form>
 
 <!-- ////////////////////////////////////////////////////////////////////////////-->

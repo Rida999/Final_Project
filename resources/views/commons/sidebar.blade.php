@@ -2,11 +2,13 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class="nav-item  ">
-                <a href="{{route('list')}}">
+                <a href="{{route('stores.index')}}">
                     <i class="fa-solid fa-house"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">Blank Page</span>
+                    <span class="menu-title" data-i18n="nav.dash.main">Stores</span>
                 </a>
             </li>
+
+            
   </ul>
     </div>
 </div>
