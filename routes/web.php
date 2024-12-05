@@ -14,6 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Authentication routes
 Auth::routes();
 
@@ -22,13 +23,19 @@ Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('g
 Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Resource Routes
+//Menu pages
 Route::resource('menus', MenusController::class);
+Route::get('/menus/add', [MenusController::class, 'create'])->name('menus.create');
+Route::get('/menus/{id}/edit', [MenusController::class, 'edit'])->name('menus.edit');
+Route::put('/menus/{id}', [MenusController::class, 'update'])->name('menus.update');
+//Special Offers
 Route::resource('special_offers', SpecialOffersController::class);
+Route::get('/special_offers/add', [SpecialOffersController::class, 'create'])->name('special_offers.create');
+Route::get('/special_offers/{id}/edit', [SpecialOffersController::class, 'edit'])->name('special_offers.edit');
+Route::put('/special_offers/{id}', [SpecialOffersController::class, 'update'])->name('special_offers.update');
 
-// Routes from the new project
-Route::get('create-blank', [WebsiteController::class, 'create'])->name('create');
-Route::get('list-blank', [WebsiteController::class, 'list'])->name('list');
+
+
 
 // Home Route
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -48,5 +55,6 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::resource('stores', StoresController::class);
+
 
 
