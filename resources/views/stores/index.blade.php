@@ -58,7 +58,7 @@
                                                         No Logo
                                                     @endif
                                                 </td>
-                                                <td>{{ $store->created_at->format('Y-m-d') }}</td> <!-- Displaying creation date -->
+                                                <td>{{ \Carbon\Carbon::parse($store->created_at)->format('Y-m-d') }}</td> <!-- Displaying creation date -->
                                                 <td>
                                                     <a href="{{ route('stores.edit', $store->id) }}" class="icons warning">
                                                         <i class="fa-solid fa-pen-to-square"></i>

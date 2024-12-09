@@ -7,7 +7,8 @@
                     <i class="fa-solid fa-house"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">Stores</span>
                 </a>
-
+            </li>
+            <li>
                 <a href="{{route('menus.index')}}">
                     <i class="fa-solid fa-utensils"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">Menus</span>

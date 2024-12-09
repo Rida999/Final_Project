@@ -28,12 +28,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::resource('menus', MenusController::class);
 //Special Offers
 Route::resource('special_offers', SpecialOffersController::class);
-Route::get('/special_offers/add', [SpecialOffersController::class, 'create'])->name('special_offers.create');
-Route::get('/special_offers/{id}/edit', [SpecialOffersController::class, 'edit'])->name('special_offers.edit');
-Route::put('/special_offers/{id}', [SpecialOffersController::class, 'update'])->name('special_offers.update');
-
-
-
+//Menu items
+Route::resource('menu_items', MenuItemsController::class);
 
 // Home Route
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -55,4 +51,25 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 Route::resource('stores', StoresController::class);
 
 
-
+//lynn
+Route::get('/about', function () {
+    return view('about');
+});
+Route::get('/contact', function () {
+    return view('contact');
+});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+Route::get('/index', function () {
+    return view('index');
+});
+Route::get('/menu', function () {
+    return view('menu');
+});
+Route::get('/service', function () {
+    return view('service');
+});
+Route::get('/testimonial', function () {
+    return view('testimonial');
+});
