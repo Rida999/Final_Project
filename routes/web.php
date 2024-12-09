@@ -56,5 +56,28 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 
 Route::resource('stores', StoresController::class);
 
+Route::get('/about', function () {
+    return view('about');
+});
 
+Route::get('/contact', function () {
+    return view('contact'); 
+});
+Route::get('/menu', function () {
+    return view('menu'); 
+});
+Route::get('/about', function () {
+    return view('about'); 
+});
 
+Route::get('/service', function () {
+    return view('service');
+});
+
+Route::get('/testimonial', function () {
+    return view('testimonial');
+});
+
+Route::get('/index', function () {
+    return view('index');
+});
