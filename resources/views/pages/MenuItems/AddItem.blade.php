@@ -4,11 +4,11 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2">
-                <h3 class="content-header-title">Add Special Offer</h3>
+                <h3 class="content-header-title">Add Menu Item</h3>
                 <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('special_offers.index') }}">Special Offers</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('menu_items.index') }}">Menu Items</a></li>
                             <li class="breadcrumb-item active">Add</li>
                         </ol>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Add Special Offer Form</h4>
+                                <h4 class="card-title">Add Menu Item Form</h4>
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
@@ -35,39 +35,61 @@
                                         </div>
                                     @endif
 
-                                    <form action="{{ route('special_offers.store') }}" method="POST">
+                                    <div id="form-error-message"></div>
+                                    <form action="{{ route('menu_items.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                         @csrf
                                         <div class="form-body">
+                                            <!-- Name -->
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="discount">Discount (%)</label>
-                                                        <input type="number" class="form-control" id="discount" name="discount" value="{{ old('discount') }}" required>
+                                                        <label for="name">Name</label>
+                                                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Description -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="description">Description</label>
+                                                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ old('description') }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="start_date">Start Date</label>
-                                                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ old('start_date') }}" required>
+                                                        <label for="price">Price</label>
+                                                        <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ old('price') }}" required>
                                                     </div>
                                                 </div>
+
+                                                <!-- Category -->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="end_date">End Date</label>
-                                                        <input type="datetime-local" class="form-control" id="end_date" name="end_date" value="{{ old('end_date') }}" required>
+                                                        <label for="category">Category</label>
+                                                        <input type="text" class="form-control" id="category" name="category" value="{{ old('category') }}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Image -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="image">Image (optional)</label>
+                                                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- Hidden input for menu_item_id -->
-                                        <input type="hidden" name="menu_item_id" value="1">
-
                                         <div class="form-actions">
-                                            <a href="{{ route('special_offers.index') }}" class="btn btn-warning mr-1">
+                                            <a href="{{ route('menu_items.index') }}" class="btn btn-warning mr-1">
                                                 <i class="ft-x"></i> Cancel
                                             </a>
                                             <button type="submit" class="btn btn-primary">

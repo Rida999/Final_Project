@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MenusController;
 use App\Http\Controllers\SpecialOffersController;
+use App\Http\Controllers\MenuItemsController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoresController;
@@ -25,9 +26,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Menu pages
 Route::resource('menus', MenusController::class);
-Route::get('/menus/add', [MenusController::class, 'create'])->name('menus.create');
-Route::get('/menus/{id}/edit', [MenusController::class, 'edit'])->name('menus.edit');
-Route::put('/menus/{id}', [MenusController::class, 'update'])->name('menus.update');
 //Special Offers
 Route::resource('special_offers', SpecialOffersController::class);
 Route::get('/special_offers/add', [SpecialOffersController::class, 'create'])->name('special_offers.create');
@@ -56,28 +54,5 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 
 Route::resource('stores', StoresController::class);
 
-Route::get('/about', function () {
-    return view('about');
-});
 
-Route::get('/contact', function () {
-    return view('contact'); 
-});
-Route::get('/menu', function () {
-    return view('menu'); 
-});
-Route::get('/about', function () {
-    return view('about'); 
-});
 
-Route::get('/service', function () {
-    return view('service');
-});
-
-Route::get('/testimonial', function () {
-    return view('testimonial');
-});
-
-Route::get('/index', function () {
-    return view('index');
-});

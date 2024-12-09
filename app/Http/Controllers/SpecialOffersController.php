@@ -11,20 +11,20 @@ class SpecialOffersController extends Controller
     public function index()
     {
         $specialOffers = SpecialOffers::paginate(10); // Adjust the number per page
-        return view('pages.menu.SpecialOffers.Index', compact('specialOffers'));
+        return view('pages.SpecialOffers.Index', compact('specialOffers'));
     }
 
     // Show the form for creating a new resource
     public function create()
     {
-        return view('pages.menu.SpecialOffers.AddItem'); // No need to pass menu items as dropdown is not needed
+        return view('pages.SpecialOffers.AddItem'); // No need to pass menu items as dropdown is not needed
     }
 
     // Store a newly created resource in storage
     public function store(Request $request)
     {
         $request->validate([
-            'discount' => 'required|numeric',
+            'discount' => 'required|numeric|min:0|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
         ]);
@@ -46,7 +46,7 @@ class SpecialOffersController extends Controller
         $specialOffer = SpecialOffers::findOrFail($id);
 
         // Return the view with the special offer data
-        return view('pages.menu.SpecialOffers.EditItem', compact('specialOffer'));
+        return view('pages.SpecialOffers.EditItem', compact('specialOffer'));
     }
 
     // Update the specified resource in storage
@@ -76,5 +76,10 @@ class SpecialOffersController extends Controller
         $specialOffer->delete();
 
         return redirect()->route('special_offers.index')->with('success', 'Special offer deleted successfully.');
+    }
+
+    public function show($id)
+    {
+
     }
 }
