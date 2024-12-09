@@ -55,5 +55,4 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 Route::resource('stores', StoresController::class);
 
 
-//Menu Items
-Route::resource('menu_items', MenuItemsController::class);
+
