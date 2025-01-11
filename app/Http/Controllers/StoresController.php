@@ -11,12 +11,12 @@ class StoresController extends Controller
     public function index()
     {
         $stores = Stores::paginate(10);
-        return view('stores.index', compact('stores'));
+        return view('pages.stores.index', compact('stores'));
     }
 
     public function create()
     {
-        return view('stores.create');
+        return view('pages.stores.create');
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class StoresController extends Controller
     public function edit($id)
     {
         $store = Stores::findOrFail($id);
-        return view('stores.edit', compact('store'));
+        return view('pages.stores.edit', compact('store'));
     }
 
     public function update(Request $request, $id)

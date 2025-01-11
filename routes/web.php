@@ -12,7 +12,7 @@ use App\Http\Controllers\StoresController;
 
 // Redirect root URL to the welcome view
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.ui.index');
 });
 
 
@@ -53,23 +53,17 @@ Route::resource('stores', StoresController::class);
 
 //lynn
 Route::get('/about', function () {
-    return view('about');
+    return view('pages.ui.about');
 });
-Route::get('/contact', function () {
-    return view('contact');
+Route::get('/contacts', function () {
+    return view('pages.ui.contacts');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-Route::get('/index', function () {
-    return view('index');
+Route::get('/restaurants', function () {
+    return view('pages.ui.restaurants');
 });
 Route::get('/menu', function () {
-    return view('menu');
+    return view('pages.ui.menu');
 });
-Route::get('/service', function () {
-    return view('service');
-});
-Route::get('/testimonial', function () {
-    return view('testimonial');
+Route::get('/home', function () {
+    return view('pages.ui.index');
 });

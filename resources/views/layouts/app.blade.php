@@ -15,7 +15,6 @@
           rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
-    USJ
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="{{asset('cms/app-assets/css/vendors.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('cms/app-assets/vendors/css/calendars/fullcalendar.min.css')}}">

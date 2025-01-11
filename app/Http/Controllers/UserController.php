@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10); // Paginate users
-        return view('users.index', compact('users')); // Blade view for listing users
+        return view('pages.users.index', compact('users')); // Blade view for listing users
     }
 
     // Show the form for editing a specific user
