@@ -7,7 +7,7 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="/">
                         <img src="{{asset('cms/app-assets/images/logo/logo2.png')}}" alt="Logo" width="50" class="logoimg"  >
-                            Project Informatique
+                            RCLN Project
                     </a>
                 </li>
                 <li class="nav-item d-md-none">
@@ -24,21 +24,24 @@
 
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                <span class="mr-1">Hello,
+                <span class="mr-1">Hello
                   <span class="user-name text-bold-700"> Admin</span>
                 </span>
                             <span class="avatar avatar-online">
                   <img src="{{asset('cms/app-assets/images/avatar.jpg')}}" alt="avatar"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href=""><i class="ft-power"></i> logout</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="javascript:document.getElementById('logoutform').submit();"><i class="ft-power"></i> logout</a>
                         </div>
                     </li>
-
                 </ul>
             </div>
         </div>
     </div>
 </nav>
+
+<form action="{{ route('logout') }}" method="POST" id="logoutform">
+    @csrf
+</form>
 
 <!-- ////////////////////////////////////////////////////////////////////////////-->

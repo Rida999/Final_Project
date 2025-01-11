@@ -11,26 +11,26 @@ class MenusController extends Controller
     public function index()
     {
         $menus = Menus::paginate(10); 
-        return view('blank.List', compact('menus'));
+        return view('pages.menus.Index', compact('menus'));
     }
 
     // Show the form for creating a new resource
     public function create()
     {
-        return view('blank.Add');
+        return view('pages.menus.AddItem');
     }
 
     // Store a newly created resource in storage
-    public function store(Request $request)
+    public function store(Request $request) //kamen mabede yeha bas bede index
     {
         $request->validate([
-            'store_id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $menuData = $request->all();
+        $menuData['store_id'] = 1; // Set the store_id to 1 by default
 
         // Handle image upload if present
         if ($request->hasFile('image')) {
@@ -38,21 +38,28 @@ class MenusController extends Controller
         }
 
         Menus::create($menuData);
+
         return redirect()->route('menus.index')->with('success', 'Menu created successfully.');
     }
 
+    public function edit($id)
+{
+    $menu = Menus::findOrFail($id);
+    return view('pages.menus.EditItem', compact('menu'));
+}
+
+
     // Update the specified resource in storage
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // i need update and delete
     {
         $request->validate([
-            'store_id' => 'required|integer',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $menu = Menus::findOrFail($id);
-        $menuData = $request->all();
+        $menuData = $request->except(['_token', '_method']);
 
         // Handle image upload if present
         if ($request->hasFile('image')) {
@@ -60,6 +67,7 @@ class MenusController extends Controller
         }
 
         $menu->update($menuData);
+
         return redirect()->route('menus.index')->with('success', 'Menu updated successfully.');
     }
 
@@ -68,7 +76,12 @@ class MenusController extends Controller
     {
         $menu = Menus::findOrFail($id);
         $menu->delete();
-
+        
         return redirect()->route('menus.index')->with('success', 'Menu deleted successfully.');
+    }
+
+    public function show($id)
+    {
+        
     }
 }

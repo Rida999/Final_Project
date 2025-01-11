@@ -15,7 +15,6 @@
           rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
-    USJ
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="{{asset('cms/app-assets/css/vendors.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('cms/app-assets/vendors/css/calendars/fullcalendar.min.css')}}">
@@ -88,6 +87,32 @@
 <script src="{{asset('cms/app-assets/vendors/js/pickers/pickadate/picker.js')}}" type="text/javascript"></script>
 <script src="{{asset('cms/app-assets/vendors/js/pickers/pickadate/picker.date.js')}}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+<script>
+    function validateForm() {
+        const startDate = new Date(document.getElementById('start_date').value);
+        const endDate = new Date(document.getElementById('end_date').value);
+
+        const errorDiv = document.getElementById('form-error-message');
+
+        // Clear any previous error messages
+        if (errorDiv) {
+            errorDiv.innerHTML = '';
+        }
+
+        if (endDate <= startDate) {
+            if (errorDiv) {
+                errorDiv.innerHTML = `
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Invalid Date Range:</strong> The end date must be after the start date.
+                    </div>
+                `;
+            }
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+</script>
 {{--<script src="{{asset('cms/app-assets/js/scripts/extensions/fullcalendar.js')}}" type="text/javascript"></script>--}}
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 @yield('customjs')
