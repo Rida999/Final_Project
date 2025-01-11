@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class paymentstatus extends Model
 {
     use HasFactory;
+
+    protected $table = 'payment_status';
 }
