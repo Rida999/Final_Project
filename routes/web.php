@@ -98,3 +98,4 @@ Route::get('/home', function () {
 //carl
 Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
 Route::post('/send-email', [ContactController::class, 'sendEmail'])->name('send-email');
+Route::post('/menu/review', [MenusController::class, 'storeReview'])->name('menu.store.review');

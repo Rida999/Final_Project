@@ -363,47 +363,63 @@
             <div class="container">
                 <div class="row row-60 justify-content-center">
                     <div class="col-lg-8">
-                        <h4 class="text-spacing-25 text-transform-none">Get in Touch</h4>
-                        <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+                        <h4 class="text-spacing-25 text-transform-none">Add Your Review</h4>
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <form class="rd-form rd-mailform" method="POST" action="{{ route('menu.store.review') }}">
+                            @csrf
                             <div class="row row-20 gutters-20">
                                 <div class="col-md-6">
                                     <div class="form-wrap">
-                                        <input class="form-input" id="contact-your-name-5" type="text" name="name">
-                                        <label class="form-label" for="contact-your-name-5">Your Name*</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <input class="form-input" id="contact-email-5" type="email" name="email" >
+                                        <input class="form-input" id="contact-email-5" type="email" name="email" required>
                                         <label class="form-label" for="contact-email-5">Your E-mail*</label>
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-wrap">
-                                        <select class="form-input" data-minimum-results-for-search="Infinity">
-                                            <option value="0">Select a Rating*</option>
+                                        <select class="form-input" name="store_id" required>
+                                            <option value="">Select Store</option>
+                                            @foreach($stores as $store)
+                                                <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('store_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-wrap">
+                                        <select class="form-input" name="rating" required>
+                                            <option value="">Select Rating</option>
                                             <option value="1">1 Star</option>
                                             <option value="2">2 Stars</option>
                                             <option value="3">3 Stars</option>
                                             <option value="4">4 Stars</option>
                                             <option value="5">5 Stars</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <input class="form-input" id="contact-phone-5" type="text" name="phone" >
-                                        <label class="form-label" for="contact-phone-5">Your Phone*</label>
+                                        @error('rating')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-wrap">
-                                        <label class="form-label" for="contact-message-5">Review*</label>
-                                        <textarea class="form-input textarea-lg" id="contact-message-5" name="message" ></textarea>
+                                        <label class="form-label" for="review_text">Review*</label>
+                                        <textarea class="form-input textarea-lg" id="review_text" name="review_text" required></textarea>
+                                        @error('review_text')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <button class="button button-secondary button-winona" type="submit">Submit</button>
+                            <button class="button button-secondary button-winona" type="submit">Submit Review</button>
                         </form>
                     </div>
                     <div class="col-lg-4">
