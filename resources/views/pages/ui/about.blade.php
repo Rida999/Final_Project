@@ -495,7 +495,7 @@
                   <div class="footer-modern-contacts wow slideInDown">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon mdi mdi-email"></span></div>
-                      <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                      <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                     </div>
                   </div>
                   <div class="wow slideInRight">
