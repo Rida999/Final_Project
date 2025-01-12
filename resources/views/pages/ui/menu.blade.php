@@ -381,10 +381,12 @@
                                 <div class="col-md-6">
                                     <div class="form-wrap">
                                         <select class="form-input" data-minimum-results-for-search="Infinity">
-                                            <option value="1">Select a Service</option>
-                                            <option value="2">Dine-In</option>
-                                            <option value="3">Carry-Out</option>
-                                            <option value="4">Event Catering</option>
+                                            <option value="0">Select a Rating*</option>
+                                            <option value="1">1 Star</option>
+                                            <option value="2">2 Stars</option>
+                                            <option value="3">3 Stars</option>
+                                            <option value="4">4 Stars</option>
+                                            <option value="5">5 Stars</option>
                                         </select>
                                     </div>
                                 </div>
@@ -396,12 +398,12 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-wrap">
-                                        <label class="form-label" for="contact-message-5">Message</label>
+                                        <label class="form-label" for="contact-message-5">Review*</label>
                                         <textarea class="form-input textarea-lg" id="contact-message-5" name="message" ></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <button class="button button-secondary button-winona" type="submit">Contact us</button>
+                            <button class="button button-secondary button-winona" type="submit">Submit</button>
                         </form>
                     </div>
                     <div class="col-lg-4">
@@ -427,7 +429,7 @@
                                     <p class="aside-contacts-title">E-mail</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-email-outline"></span></div>
-                                        <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                                        <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-lg-12 aside-contacts-item">
@@ -468,7 +470,7 @@
                   <div class="footer-modern-contacts wow slideInDown">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon mdi mdi-email"></span></div>
-                      <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                      <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                     </div>
                   </div>
                   <div class="wow slideInRight">
