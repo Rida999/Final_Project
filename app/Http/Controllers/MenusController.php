@@ -92,7 +92,7 @@ class MenusController extends Controller
     {
         $reviews = Reviews::with(['user', 'store'])
             ->latest()
-            ->take(10)
+            ->take(20)
             ->get();
         $stores = Stores::all();
             

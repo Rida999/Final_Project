@@ -99,3 +99,11 @@ Route::get('/home', function () {
 Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
 Route::post('/send-email', [ContactController::class, 'sendEmail'])->name('send-email');
 Route::post('/menu/review', [MenusController::class, 'storeReview'])->name('menu.store.review');
+Route::get('/restaurants', function () {
+    $reviews = \App\Models\Reviews::with(['user', 'store'])
+        ->latest()
+        ->take(10)
+        ->get();
+    $stores = \App\Models\Stores::all();
+    return view('pages.ui.restaurants', compact('reviews', 'stores'));
+});
