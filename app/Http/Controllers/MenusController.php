@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menus;
+use App\Models\Reviews;
+use App\Models\Stores;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MenusController extends Controller
@@ -83,5 +86,45 @@ class MenusController extends Controller
     public function show($id)
     {
         
+    }
+
+    public function showMenu()
+    {
+        $reviews = Reviews::with(['user', 'store'])
+            ->latest()
+            ->take(20)
+            ->get();
+        $stores = Stores::all();
+            
+        return view('pages.ui.menu', compact('reviews', 'stores'));
+    }
+
+    public function storeReview(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'store_id' => 'required|exists:stores,id',
+            'rating' => 'required|integer|min:1|max:5',
+            'review_text' => 'required|string|min:10',
+        ]);
+
+        // Check if user exists with the provided email
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return redirect()->back()
+                ->with('error', 'This email does not exist in our records. Please use a registered email address.')
+                ->withInput();
+        }
+
+        // Create the review with the user's ID
+        Reviews::create([
+            'user_id' => $user->id,
+            'store_id' => $request->store_id,
+            'rating' => $request->rating,
+            'review_text' => $request->review_text,
+        ]);
+
+        return redirect()->back()->with('success', 'Review added successfully!');
     }
 }

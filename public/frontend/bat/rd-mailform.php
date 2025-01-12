@@ -1,146 +1,82 @@
 <?php
 
-$formConfigFile = file_get_contents("rd-mailform.config.json");
-$formConfig = json_decode($formConfigFile, true);
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-date_default_timezone_set('Etc/UTC');
+// Check if composer autoload exists
+if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    die('MF254: Composer autoload.php not found. Please run composer install');
+}
+
+require __DIR__ . '/vendor/autoload.php';
+use \Mailjet\Resources;
 
 try {
-    require './phpmailer/PHPMailerAutoload.php';
+    // Initialize Mailjet
+    $mj = new \Mailjet\Client('68dccad4f67683a3086bc319c251e2a6', 'af6a37eacd394da8eac589e3dda2ebf6', true, ['version' => 'v3.1']);
 
-    $recipients = $formConfig['recipientEmail'];
+    // Debug: Log POST data
+    error_log("POST data received: " . print_r($_POST, true));
 
-    preg_match_all("/([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)/", $recipients, $addresses, PREG_OFFSET_CAPTURE);
+    // Get form data
+    $name = isset($_POST['name']) ? $_POST['name'] : 'Not provided';
+    $email = isset($_POST['email']) ? $_POST['email'] : 'Not provided';
+    $phone = isset($_POST['phone']) ? $_POST['phone'] : 'Not provided';
+    $message = isset($_POST['message']) ? $_POST['message'] : 'Not provided';
+    $service = isset($_POST['service']) ? $_POST['service'] : 'Not provided';
 
-    if (!count($addresses[0])) {
-        die('MF001');
+    // Prepare email content
+    $emailContent = "
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> {$name}</p>
+        <p><strong>Email:</strong> {$email}</p>
+        <p><strong>Phone:</strong> {$phone}</p>
+        <p><strong>Service:</strong> {$service}</p>
+        <p><strong>Message:</strong> {$message}</p>
+    ";
+
+    $body = [
+        'Messages' => [
+            [
+                'From' => [
+                    'Email' => "contact.rcln@gmail.com",
+                    'Name' => "Website Contact Form"
+                ],
+                'To' => [
+                    [
+                        'Email' => "carl27matta@gmail.com",
+                        'Name' => "Carl Matta"
+                    ],
+                    [
+                        'Email' => "carlmatta3@gmail.com",
+                        'Name' => "Carl Matta"
+                    ],
+                ],
+                'Subject' => "New Contact Form Submission",
+                'HTMLPart' => $emailContent,
+                'TextPart' => strip_tags($emailContent)
+            ]
+        ]
+    ];
+
+    // Debug: Log the request body
+    error_log("Mailjet request body: " . print_r($body, true));
+
+    // Send email using Mailjet
+    $response = $mj->post(Resources::$Email, ['body' => $body]);
+
+    // Debug: Log the response
+    error_log("Mailjet response: " . print_r($response->getData(), true));
+
+    if ($response->success()) {
+        die('MF000'); // Success code expected by the front-end
+    } else {
+        error_log("Mailjet error: " . print_r($response->getStatus(), true));
+        throw new Exception('Failed to send email: ' . $response->getReasonPhrase());
     }
 
-    function getRemoteIPAddress() {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-
-        } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-        return $_SERVER['REMOTE_ADDR'];
-    }
-
-    if (preg_match('/^(127\.|192\.168\.)/', getRemoteIPAddress())) {
-        die('MF002');
-    }
-
-    $template = file_get_contents('rd-mailform.tpl');
-
-    if (isset($_POST['form-type'])) {
-        switch ($_POST['form-type']){
-            case 'contact':
-                $subject = 'A message from your site visitor';
-                break;
-            case 'subscribe':
-                $subject = 'Subscribe request';
-                break;
-            case 'order':
-                $subject = 'Order request';
-                break;
-            default:
-                $subject = 'A message from your site visitor';
-                break;
-        }
-    }else{
-        die('MF004');
-    }
-
-    if (isset($_POST['email'])) {
-        $template = str_replace(
-            array("<!-- #{FromState} -->", "<!-- #{FromEmail} -->"),
-            array("Email:", $_POST['email']),
-            $template);
-    }
-
-    if (isset($_POST['message'])) {
-        $template = str_replace(
-            array("<!-- #{MessageState} -->", "<!-- #{MessageDescription} -->"),
-            array("Message:", $_POST['message']),
-            $template);
-    }
-
-    preg_match("/(<!-- #\{BeginInfo\} -->)(.|\s)*?(<!-- #\{EndInfo\} -->)/", $template, $tmp, PREG_OFFSET_CAPTURE);
-    foreach ($_POST as $key => $value) {
-        if ($key != "counter" && $key != "email" && $key != "message" && $key != "form-type" && $key != "g-recaptcha-response" && !empty($value)){
-            $info = str_replace(
-                array("<!-- #{BeginInfo} -->", "<!-- #{InfoState} -->", "<!-- #{InfoDescription} -->"),
-                array("", ucfirst($key) . ':', $value),
-                $tmp[0][0]);
-
-            $template = str_replace("<!-- #{EndInfo} -->", $info, $template);
-        }
-    }
-
-    $template = str_replace(
-        array("<!-- #{Subject} -->", "<!-- #{SiteName} -->"),
-        array($subject, $_SERVER['SERVER_NAME']),
-        $template);
-
-    $mail = new PHPMailer();
-
-
-    if ($formConfig['useSmtp']) {
-        //Tell PHPMailer to use SMTP
-        $mail->isSMTP();
-
-        //Enable SMTP debugging
-        // 0 = off (for production use)
-        // 1 = client messages
-        // 2 = client and server messages
-        $mail->SMTPDebug = 0;
-
-        $mail->Debugoutput = 'html';
-
-        // Set the hostname of the mail server
-        $mail->Host = $formConfig['host'];
-
-        // Set the SMTP port number - likely to be 25, 465 or 587
-        $mail->Port = $formConfig['port'];
-
-        // Whether to use SMTP authentication
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "ssl";
-
-        // Username to use for SMTP authentication
-        $mail->Username = $formConfig['username'];
-
-        // Password to use for SMTP authentication
-        $mail->Password = $formConfig['password'];
-    }
-
-    $mail->From = $addresses[0][0][0];
-
-    # Attach file
-    if (isset($_FILES['file']) &&
-        $_FILES['file']['error'] == UPLOAD_ERR_OK) {
-        $mail->AddAttachment($_FILES['file']['tmp_name'],
-            $_FILES['file']['name']);
-    }
-
-    if (isset($_POST['name'])){
-        $mail->FromName = $_POST['name'];
-    }else{
-        $mail->FromName = "Site Visitor";
-    }
-
-    foreach ($addresses[0] as $key => $value) {
-        $mail->addAddress($value[0]);
-    }
-
-    $mail->CharSet = 'utf-8';
-    $mail->Subject = $subject;
-    $mail->MsgHTML($template);
-    $mail->send();
-
-    die('MF000');
-} catch (phpmailerException $e) {
-    die('MF254');
 } catch (Exception $e) {
-    die('MF255');
+    error_log("Exception caught: " . $e->getMessage());
+    die('MF254'); // Error code expected by the front-end
 }
