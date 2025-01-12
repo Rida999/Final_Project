@@ -93,3 +93,7 @@ Route::get('/menu', function () {
 Route::get('/home', function () {
     return view('pages.ui.index');
 });
+
+
+
+Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');

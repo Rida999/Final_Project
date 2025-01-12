@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menus;
+use App\Models\Reviews;
 use Illuminate\Http\Request;
 
 class MenusController extends Controller
@@ -83,5 +84,15 @@ class MenusController extends Controller
     public function show($id)
     {
         
+    }
+
+    public function showMenu()
+    {
+        $reviews = Reviews::with(['user', 'store'])
+            ->latest()
+            ->take(10)
+            ->get();
+            
+        return view('pages.ui.menu', compact('reviews'));
     }
 }
