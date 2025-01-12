@@ -72,13 +72,13 @@
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                          <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                          <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                         </div>
                       </li>
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                          <div class="unit-body"><a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a></div>
+                          <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                         </div>
                       </li>
                     </ul>
@@ -299,8 +299,8 @@
               <!-- Team Modern-->
               <article class="team-modern"><a class="team-modern-figure" href="#"><img src={{url('frontend/images/team-01-270x236.jpg')}} alt="" width="270" height="236"/></a>
                 <div class="team-modern-caption">
-                  <h6 class="team-modern-name"><a href="#">Richard Peterson</a></h6>
-                  <div class="team-modern-status">Head Chef</div>
+                  <h6 class="team-modern-name"><a href="#">Rida Ajam</a></h6>
+                  <div class="team-modern-status"></div>
                   <ul class="list-inline team-modern-social-list">
                     <li><a class="icon mdi mdi-facebook" href="#"></a></li>
                     <li><a class="icon mdi mdi-twitter" href="#"></a></li>
@@ -314,8 +314,8 @@
               <!-- Team Modern-->
               <article class="team-modern"><a class="team-modern-figure" href="#"><img src={{url('frontend/images/team-02-270x236.jpg')}} alt="" width="270" height="236"/></a>
                 <div class="team-modern-caption">
-                  <h6 class="team-modern-name"><a href="#">Amelia Lee</a></h6>
-                  <div class="team-modern-status">Manager</div>
+                  <h6 class="team-modern-name"><a href="#">Carl Matta</a></h6>
+                  <div class="team-modern-status"></div>
                   <ul class="list-inline team-modern-social-list">
                     <li><a class="icon mdi mdi-facebook" href="#"></a></li>
                     <li><a class="icon mdi mdi-twitter" href="#"></a></li>
@@ -329,8 +329,8 @@
               <!-- Team Modern-->
               <article class="team-modern"><a class="team-modern-figure" href="#"><img src={{url('frontend/images/team-03-270x236.jpg')}} alt="" width="270" height="236"/></a>
                 <div class="team-modern-caption">
-                  <h6 class="team-modern-name"><a href="#">Sam Peterson</a></h6>
-                  <div class="team-modern-status">Head Baker</div>
+                  <h6 class="team-modern-name"><a href="#">Lynn Farran</a></h6>
+                  <div class="team-modern-status"></div>
                   <ul class="list-inline team-modern-social-list">
                     <li><a class="icon mdi mdi-facebook" href="#"></a></li>
                     <li><a class="icon mdi mdi-twitter" href="#"></a></li>
@@ -344,8 +344,8 @@
               <!-- Team Modern-->
               <article class="team-modern"><a class="team-modern-figure" href="#"><img src={{url('frontend/images/team-04-270x236.jpg')}} alt="" width="270" height="236"/></a>
                 <div class="team-modern-caption">
-                  <h6 class="team-modern-name"><a href="#">Jane Smith</a></h6>
-                  <div class="team-modern-status">Pizza Chef</div>
+                  <h6 class="team-modern-name"><a href="#">Noura Houmani</a></h6>
+                  <div class="team-modern-status"></div>
                   <ul class="list-inline team-modern-social-list">
                     <li><a class="icon mdi mdi-facebook" href="#"></a></li>
                     <li><a class="icon mdi mdi-twitter" href="#"></a></li>
@@ -489,7 +489,7 @@
                   <div class="footer-modern-contacts wow slideInUp">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon icon-24 mdi mdi-phone"></span></div>
-                      <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                      <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                     </div>
                   </div>
                   <div class="footer-modern-contacts wow slideInDown">

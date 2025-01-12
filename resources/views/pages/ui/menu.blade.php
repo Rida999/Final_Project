@@ -68,13 +68,13 @@
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                          <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                          <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                         </div>
                       </li>
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                          <div class="unit-body"><a class="address" href="#"> 514 S. Magnolia St. Orlando, FL 32806</a></div>
+                          <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                         </div>
                       </li>
                     </ul>
@@ -438,7 +438,7 @@
                                     <p class="aside-contacts-title">Phone</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                                        <div class="unit-body"><a class="phone" href="tel:#">1-800-1234-567</a></div>
+                                        <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-lg-12 aside-contacts-item">
@@ -452,7 +452,7 @@
                                     <p class="aside-contacts-title">Address</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                                        <div class="unit-body"><a class="address" href="#">6036 Richmond hwy., <br class="d-md-none">Alexandria, VA, 2230</a></div>
+                                        <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -480,7 +480,7 @@
                   <div class="footer-modern-contacts wow slideInUp">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon icon-24 mdi mdi-phone"></span></div>
-                      <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                      <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                     </div>
                   </div>
                   <div class="footer-modern-contacts wow slideInDown">

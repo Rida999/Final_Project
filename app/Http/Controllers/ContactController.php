@@ -45,7 +45,11 @@ class ContactController extends Controller
                                 'Name' => "Carl Matta"
                             ],
                             [
-                                'Email' => "carlmatta3@gmail.com",
+                                'Email' => "lynnalfarran@gmail.com",
+                                'Name' => "Lynn Farran"
+                            ],
+                            [
+                                'Email' => "ridaajam999@gmail.com",
                                 'Name' => "Rida Ajam"
                             ],
                         ],
