@@ -76,13 +76,13 @@
                                         <li>
                                             <div class="unit unit-spacing-xs">
                                                 <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                                                <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                                                <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="unit unit-spacing-xs">
                                                 <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                                                <div class="unit-body"><a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a></div>
+                                                <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                                             </div>
                                         </li>
                                     </ul>
@@ -119,7 +119,7 @@
             </div>
             <div class="container">
                 <ul class="breadcrumbs-custom-path">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/home">Home</a></li>
                     <li class="active">Contacts</li>
                 </ul>
             </div>
@@ -130,45 +130,77 @@
                 <div class="row row-60 justify-content-center">
                     <div class="col-lg-8">
                         <h4 class="text-spacing-25 text-transform-none">Get in Touch</h4>
-                        <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                            <div class="row row-20 gutters-20">
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <input class="form-input" id="contact-your-name-5" type="text" name="name">
-                                        <label class="form-label" for="contact-your-name-5">Your Name*</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <input class="form-input" id="contact-email-5" type="email" name="email" >
-                                        <label class="form-label" for="contact-email-5">Your E-mail*</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <select class="form-input" data-minimum-results-for-search="Infinity">
-                                            <option value="1">Select a Service</option>
-                                            <option value="2">Dine-In</option>
-                                            <option value="3">Carry-Out</option>
-                                            <option value="4">Event Catering</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-wrap">
-                                        <input class="form-input" id="contact-phone-5" type="text" name="phone" >
-                                        <label class="form-label" for="contact-phone-5">Your Phone*</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-wrap">
-                                        <label class="form-label" for="contact-message-5">Message</label>
-                                        <textarea class="form-input textarea-lg" id="contact-message-5" name="message" ></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="button button-secondary button-winona" type="submit">Contact us</button>
-                        </form>
+                        <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{ route('send-email') }}" onsubmit="return validateForm()">
+    @csrf
+    <div class="row row-20 gutters-20">
+        <div class="col-md-6">
+            <div class="form-wrap">
+                <input class="form-input" id="contact-your-name-5" type="text" name="name" required>
+                <label class="form-label" for="contact-your-name-5">Your Name*</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-wrap">
+                <input class="form-input" id="contact-email-5" type="email" name="email" required>
+                <label class="form-label" for="contact-email-5">Your E-mail*</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-wrap">
+                <select class="form-input" name="service" data-minimum-results-for-search="Infinity" required>
+                    <option value="1">Select a Service*</option>
+                    <option value="2">Technical Support</option>
+                    <option value="3">Business Inquiries</option>
+                    <option value="4">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-wrap">
+                <input class="form-input" id="contact-phone-5" type="text" name="phone" pattern="^\d+$" required>
+                <label class="form-label" for="contact-phone-5">Your Phone*</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-wrap">
+                <label class="form-label" for="contact-message-5">Message*</label>
+                <textarea class="form-input textarea-lg" id="contact-message-5" name="message" required></textarea>
+            </div>
+        </div>
+    </div>
+    <button class="button button-secondary button-winona" type="submit">Contact us</button>
+</form>
+
+<script>
+    function validateForm() {
+        var name = document.getElementById('contact-your-name-5').value;
+        var email = document.getElementById('contact-email-5').value;
+        var phone = document.getElementById('contact-phone-5').value;
+        var message = document.getElementById('contact-message-5').value;
+
+        if (!name || !email || !phone || !message) {
+            alert("Please fill in all fields.");
+            return false;
+        }
+
+        // Check for valid email format
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // Ensure phone number is only numbers
+        var phonePattern = /^\d+$/;
+        if (!phonePattern.test(phone)) {
+            alert("Phone number must contain only numbers.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
                     </div>
                     <div class="col-lg-4">
                         <div class="aside-contacts">
@@ -186,21 +218,21 @@
                                     <p class="aside-contacts-title">Phone</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                                        <div class="unit-body"><a class="phone" href="tel:#">1-800-1234-567</a></div>
+                                        <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-lg-12 aside-contacts-item">
                                     <p class="aside-contacts-title">E-mail</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-email-outline"></span></div>
-                                        <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                                        <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-lg-12 aside-contacts-item">
                                     <p class="aside-contacts-title">Address</p>
                                     <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                         <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                                        <div class="unit-body"><a class="address" href="#">6036 Richmond hwy., <br class="d-md-none">Alexandria, VA, 2230</a></div>
+                                        <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -227,13 +259,13 @@
                                 <div class="footer-modern-contacts wow slideInUp">
                                     <div class="unit unit-spacing-sm align-items-center">
                                         <div class="unit-left"><span class="icon icon-24 mdi mdi-phone"></span></div>
-                                        <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                                        <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                                     </div>
                                 </div>
                                 <div class="footer-modern-contacts wow slideInDown">
                                     <div class="unit unit-spacing-sm align-items-center">
                                         <div class="unit-left"><span class="icon mdi mdi-email"></span></div>
-                                        <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                                        <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                                     </div>
                                 </div>
                                 <div class="wow slideInRight">

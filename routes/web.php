@@ -13,6 +13,7 @@ use App\Http\Controllers\ListReviewsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoresController;
+use App\Http\Controllers\ContactController;
 
 // Redirect root URL to the welcome view
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::get('/', function () {
 Route::get('create-blank',[WebsiteController::class,'create'])->name('create');
 Route::get('list-blank',[WebsiteController::class,'list'])->name('list');
 
+//carl
 Route::get('create-reviews', [ReviewController::class, 'create'])->name('reviews.create');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
@@ -32,8 +34,6 @@ Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('r
 Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 // Route::put('reviews/{id}', [ReviewController::class, 'update'])->name('reviews.update');
 Route::put('reviews/{id}', [ReviewController::class, 'update'])->name('reviews.update');
-
-
 
 Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
 Route::get('/orders/{id}/edit', [OrdersController::class, 'edit'])->name('orders.edit');
@@ -94,4 +94,18 @@ Route::get('/menu', function () {
 });
 Route::get('/home', function () {
     return view('pages.ui.index');
+});
+
+
+//carl
+Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
+Route::post('/send-email', [ContactController::class, 'sendEmail'])->name('send-email');
+Route::post('/menu/review', [MenusController::class, 'storeReview'])->name('menu.store.review');
+Route::get('/restaurants', function () {
+    $reviews = \App\Models\Reviews::with(['user', 'store'])
+        ->latest()
+        ->take(10)
+        ->get();
+    $stores = \App\Models\Stores::all();
+    return view('pages.ui.restaurants', compact('reviews', 'stores'));
 });

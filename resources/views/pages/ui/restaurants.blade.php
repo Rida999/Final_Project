@@ -68,13 +68,13 @@
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                          <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                          <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                         </div>
                       </li>
                       <li>
                         <div class="unit unit-spacing-xs">
                           <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                          <div class="unit-body"><a class="address" href="#"> 514 S. Magnolia St. Orlando, FL 32806</a></div>
+                          <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
                         </div>
                       </li>
                     </ul>
@@ -301,6 +301,133 @@
         </div>
       </section>
 
+      <!-- Reviews Section -->
+      <section class="section section-xl bg-default">
+        <div class="container">
+          <h3 class="wow fadeInLeft">What People Say</h3>
+        </div>
+        <div class="container container-style-1">
+          <div class="owl-carousel owl-style-12" data-items="1" data-sm-items="2" data-lg-items="3" data-margin="30" data-xl-margin="45" data-autoplay="true" data-nav="true" data-center="true" data-smart-speed="400">
+            @foreach($reviews as $review)
+              <!-- Quote Tara-->
+              <article class="quote-tara">
+                <div class="quote-tara-caption">
+                <div class="quote-tara-text">
+                  <p class="q"><strong>{{ $review->store->name }}</strong>: {{ $review->review_text }}</p>
+                </div>
+                </div>
+                <h6 class="quote-tara-author">{{ $review->user->name }}</h6>
+                <div class="quote-tara-status">{{ $review->rating }} Stars</div>
+              </article>
+            @endforeach
+          </div>
+        </div>
+      </section>
+
+      <!-- Review Form Section -->
+      <section class="section section-lg bg-default text-md-left">
+        <div class="container">
+            <div class="row row-60 justify-content-center">
+                <div class="col-lg-8">
+                    <h4 class="text-spacing-25 text-transform-none">Add Your Review</h4>
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <form class="rd-form rd-mailform" method="POST" action="{{ route('menu.store.review') }}">
+                        @csrf
+                        <div class="row row-20 gutters-20">
+                            <div class="col-md-6">
+                                <div class="form-wrap">
+                                    <input class="form-input" id="contact-email-5" type="email" name="email" required>
+                                    <label class="form-label" for="contact-email-5">Your E-mail*</label>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-wrap">
+                                    <select class="form-input" name="store_id" required>
+                                        <option value="">Select Store</option>
+                                        @foreach($stores as $store)
+                                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('store_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-wrap">
+                                    <select class="form-input" name="rating" required>
+                                        <option value="">Select Rating</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
+                                    </select>
+                                    @error('rating')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-wrap">
+                                    <label class="form-label" for="review_text">Review*</label>
+                                    <textarea class="form-input textarea-lg" id="review_text" name="review_text" required></textarea>
+                                    @error('review_text')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <button class="button button-secondary button-winona" type="submit">Submit Review</button>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                        <div class="aside-contacts">
+                            <div class="row row-30">
+                                <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                                    <p class="aside-contacts-title">Get social</p>
+                                    <ul class="list-inline contacts-social-list list-inline-sm">
+                                        <li><a class="icon mdi mdi-facebook" href="#"></a></li>
+                                        <li><a class="icon mdi mdi-twitter" href="#"></a></li>
+                                        <li><a class="icon mdi mdi-instagram" href="#"></a></li>
+                                        <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                                    <p class="aside-contacts-title">Phone</p>
+                                    <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                        <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
+                                        <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                                    <p class="aside-contacts-title">E-mail</p>
+                                    <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                        <div class="unit-left"><span class="icon mdi mdi-email-outline"></span></div>
+                                        <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                                    <p class="aside-contacts-title">Address</p>
+                                    <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                        <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
+                                        <div class="unit-body"><a class="address" href="#">USJ, Mansourieh</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
       <!-- Page Footer-->
       <footer class="section footer-modern context-dark footer-modern-2">
         <div class="footer-modern-line-2">
@@ -318,13 +445,13 @@
                   <div class="footer-modern-contacts wow slideInUp">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon icon-24 mdi mdi-phone"></span></div>
-                      <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                      <div class="unit-body"><a class="phone" href="tel:#">+961 03 456 789</a></div>
                     </div>
                   </div>
                   <div class="footer-modern-contacts wow slideInDown">
                     <div class="unit unit-spacing-sm align-items-center">
                       <div class="unit-left"><span class="icon mdi mdi-email"></span></div>
-                      <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                      <div class="unit-body"><a class="mail" href="mailto:#">contact.rcln@gmail.com</a></div>
                     </div>
                   </div>
                   <div class="wow slideInRight">
