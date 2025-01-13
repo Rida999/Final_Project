@@ -31,11 +31,19 @@ class Kernel extends HttpKernel
         ],
     ];
 
-    protected $routeMiddleware = [
+    /*protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \App\Http\Middleware\EnsurePasswordIsConfirmed::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\EnsureRoleIs::class,
+    ];*/
+
+    protected $routeMiddleware = [
+        // Other middleware
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'restaurantOwner' => \App\Http\Middleware\RestaurantOwnerMiddleware::class,
     ];
+
+    
 }

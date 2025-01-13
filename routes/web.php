@@ -109,3 +109,13 @@ Route::get('/restaurants', function () {
     $stores = \App\Models\Stores::all();
     return view('pages.ui.restaurants', compact('reviews', 'stores'));
 });
+
+Route::middleware(['auth', 'role:restaurantOwner'])->group(function () {
+    Route::get('/restaurant-owner/dashboard', [RestaurantOwnerController::class, 'dashboard'])->name('restaurant_owner.dashboard');
+    Route::get('/restaurant-owner/store', [RestaurantOwnerController::class, 'store'])->name('restaurant_owner.store');
+    Route::get('/restaurant-owner/menu', [MenuController::class, 'index'])->name('restaurant_owner.menu');
+    Route::get('/restaurant-owner/menu-items', [MenuItemController::class, 'index'])->name('restaurant_owner.menu_items');
+    Route::get('/restaurant-owner/special-offers', [SpecialOfferController::class, 'index'])->name('restaurant_owner.special_offers');
+    Route::get('/restaurant-owner/dashboard', [RestaurantOwnerController::class, 'dashboard'])->name('restaurant_owner.dashboard');
+});
+

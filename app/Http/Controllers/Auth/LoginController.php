@@ -58,17 +58,32 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    public function authenticated(Request $request, $user)
+    public function handle(Request $request, Closure $next, ...$roles)
 {
-    if ($user->role->name === 'admin') {
-        return redirect()->route('dashboard');
-    } elseif ($user->role->name === 'restaurant_owner') {
-        return redirect()->route('restaurants.index'); // Update as per your routes
-    } elseif ($user->role->name === 'user') {
-        return redirect('/'); // Or wherever the default user should go
+    // Check if user is authenticated
+    if (Auth::check()) {
+        $roleId = Auth::user()->role_id;
+ 
+        // Check if user's role ID is in the allowed roles
+        if (in_array($roleId, $roles)) {
+            // Redirect based on role_id
+            switch ($roleId) {
+                case 1:
+                    return redirect('/menus'); // Page for role_id = 1
+                case 2:
+                    return redirect('/home'); // Page for role_id = 2
+                case 3:
+                    return redirect('/restaurants'); // Page for role_id = 3
+                default:
+                    return redirect('/home'); // Default page for other roles
+            }
+        }
     }
-
-    return redirect('/'); // Default fallback
+ 
+    // Redirect if user doesn't have permission
+    return redirect('/home'); // Redirect regular users to home
 }
+
+
 
 }
