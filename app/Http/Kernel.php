@@ -36,5 +36,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \App\Http\Middleware\EnsurePasswordIsConfirmed::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+        'role' => \App\Http\Middleware\EnsureRoleIs::class,
     ];
 }

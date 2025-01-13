@@ -14,7 +14,8 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     public function __construct()
     {
@@ -56,4 +57,18 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    public function authenticated(Request $request, $user)
+{
+    if ($user->role->name === 'admin') {
+        return redirect()->route('dashboard');
+    } elseif ($user->role->name === 'restaurant_owner') {
+        return redirect()->route('restaurants.index'); // Update as per your routes
+    } elseif ($user->role->name === 'user') {
+        return redirect('/'); // Or wherever the default user should go
+    }
+
+    return redirect('/'); // Default fallback
+}
+
 }
