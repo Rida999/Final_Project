@@ -14,7 +14,8 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     public function __construct()
     {
@@ -56,4 +57,33 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    public function handle(Request $request, Closure $next, ...$roles)
+{
+    // Check if user is authenticated
+    if (Auth::check()) {
+        $roleId = Auth::user()->role_id;
+ 
+        // Check if user's role ID is in the allowed roles
+        if (in_array($roleId, $roles)) {
+            // Redirect based on role_id
+            switch ($roleId) {
+                case 1:
+                    return redirect('/menus'); // Page for role_id = 1
+                case 2:
+                    return redirect('/home'); // Page for role_id = 2
+                case 3:
+                    return redirect('/restaurants'); // Page for role_id = 3
+                default:
+                    return redirect('/home'); // Default page for other roles
+            }
+        }
+    }
+ 
+    // Redirect if user doesn't have permission
+    return redirect('/home'); // Redirect regular users to home
+}
+
+
+
 }

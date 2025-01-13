@@ -52,6 +52,8 @@ Auth::routes();
 Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+//Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
 
 //Menu pages
 Route::resource('menus', MenusController::class);
@@ -68,10 +70,7 @@ Route::get('/home', function () {
     return view('pages.ui.index', compact('stores'));
 })->name('home');
 
-// Dashboard Route (Protected with auth middleware)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+
 
 // Logout Route (Must be a POST request)
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -83,7 +82,10 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::resource('stores', StoresController::class);
-
+// Dashboard Route (Protected with auth middleware)
+Route::get('/dashboard', function () {
+    return redirect()->route('stores.index');
+})->name('dashboard');
 
 //lynn
 Route::get('/about', function () {
@@ -112,4 +114,17 @@ Route::get('/restaurants', function () {
 Route::get('/restaurants/{restaurant_id}',[MenusController::class, 'showMenu']);
 
 Route::get('/restaurants/{restaurant_id}/{menu_id}', [MenuItemsController::class, 'showMenuItems']);
+
+//carl
+Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
+Route::post('/send-email', [ContactController::class, 'sendEmail'])->name('send-email');
+Route::post('/menu/review', [MenusController::class, 'storeReview'])->name('menu.store.review');
+Route::get('/restaurants', function () {
+    $reviews = \App\Models\Reviews::with(['user', 'store'])
+        ->latest()
+        ->take(10)
+        ->get();
+    $stores = \App\Models\Stores::all();
+    return view('pages.ui.restaurants', compact('reviews', 'stores'));
+});
 
