@@ -17,7 +17,10 @@ use App\Http\Controllers\ContactController;
 
 // Redirect root URL to the welcome view
 Route::get('/', function () {
-    return view('pages.ui.index');
+    // Fetch stores (you can use pagination if there are a lot of stores)
+    $stores = \App\Models\Stores::all();
+    
+    return view('pages.ui.index', compact('stores'));
 });
 
 
@@ -60,7 +63,12 @@ Route::resource('special_offers', SpecialOffersController::class);
 Route::resource('menu_items', MenuItemsController::class);
 
 // Home Route
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    // Fetch stores (you can use pagination if there are a lot of stores)
+    $stores = \App\Models\Stores::all();
+    
+    return view('pages.ui.index', compact('stores'));
+})->name('home');
 
 
 
@@ -89,13 +97,6 @@ Route::get('/contacts', function () {
 Route::get('/restaurants', function () {
     return view('pages.ui.restaurants');
 });
-Route::get('/menu', function () {
-    return view('pages.ui.menu');
-});
-Route::get('/home', function () {
-    return view('pages.ui.index');
-});
-
 
 //carl
 Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
@@ -110,12 +111,20 @@ Route::get('/restaurants', function () {
     return view('pages.ui.restaurants', compact('reviews', 'stores'));
 });
 
-Route::middleware(['auth', 'role:restaurantOwner'])->group(function () {
-    Route::get('/restaurant-owner/dashboard', [RestaurantOwnerController::class, 'dashboard'])->name('restaurant_owner.dashboard');
-    Route::get('/restaurant-owner/store', [RestaurantOwnerController::class, 'store'])->name('restaurant_owner.store');
-    Route::get('/restaurant-owner/menu', [MenuController::class, 'index'])->name('restaurant_owner.menu');
-    Route::get('/restaurant-owner/menu-items', [MenuItemController::class, 'index'])->name('restaurant_owner.menu_items');
-    Route::get('/restaurant-owner/special-offers', [SpecialOfferController::class, 'index'])->name('restaurant_owner.special_offers');
-    Route::get('/restaurant-owner/dashboard', [RestaurantOwnerController::class, 'dashboard'])->name('restaurant_owner.dashboard');
+Route::get('/restaurants/{restaurant_id}',[MenusController::class, 'showMenu']);
+
+Route::get('/restaurants/{restaurant_id}/{menu_id}', [MenuItemsController::class, 'showMenuItems']);
+
+//carl
+Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
+Route::post('/send-email', [ContactController::class, 'sendEmail'])->name('send-email');
+Route::post('/menu/review', [MenusController::class, 'storeReview'])->name('menu.store.review');
+Route::get('/restaurants', function () {
+    $reviews = \App\Models\Reviews::with(['user', 'store'])
+        ->latest()
+        ->take(10)
+        ->get();
+    $stores = \App\Models\Stores::all();
+    return view('pages.ui.restaurants', compact('reviews', 'stores'));
 });
 

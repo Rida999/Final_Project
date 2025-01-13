@@ -46,10 +46,10 @@ class MenusController extends Controller
     }
 
     public function edit($id)
-{
-    $menu = Menus::findOrFail($id);
-    return view('pages.menus.EditItem', compact('menu'));
-}
+    {
+        $menu = Menus::findOrFail($id);
+        return view('pages.menus.EditItem', compact('menu'));
+    }
 
 
     // Update the specified resource in storage
@@ -88,15 +88,17 @@ class MenusController extends Controller
         
     }
 
-    public function showMenu()
+    public function showMenu($restaurant_id)
     {
-        $reviews = Reviews::with(['user', 'store'])
-            ->latest()
-            ->take(20)
-            ->get();
+        $restaurant = \App\Models\Stores::findOrFail($restaurant_id);
+
+        $menus = \App\Models\Menus::where('store_id', $restaurant_id)->get();
+
+        $reviews = Reviews::where('store_id',$restaurant_id)->get();
+
         $stores = Stores::all();
             
-        return view('pages.ui.menu', compact('reviews', 'stores'));
+        return view('pages.ui.menu', compact('reviews', 'stores', 'menus','restaurant'));
     }
 
     public function storeReview(Request $request)

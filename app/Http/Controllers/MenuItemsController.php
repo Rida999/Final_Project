@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MenuItems;
+use App\Models\Menus;
 use Illuminate\Http\Request;
 
 class MenuItemsController extends Controller
@@ -87,5 +88,16 @@ class MenuItemsController extends Controller
     public function show($id)
     {
         // Optional: implement if needed
+    }
+
+    public function showMenuItems($restaurant_id, $menu_id)
+    {
+
+        $restaurant = \App\Models\Stores::findOrFail($restaurant_id);
+
+        $menuItems = MenuItems::where('menu_id', $menu_id)->get();
+
+        // Return a view with menu and menu items
+        return view('pages.ui.menu_items', compact('restaurant', 'menuItems'));
     }
 }
