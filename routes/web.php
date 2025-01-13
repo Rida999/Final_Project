@@ -17,7 +17,10 @@ use App\Http\Controllers\ContactController;
 
 // Redirect root URL to the welcome view
 Route::get('/', function () {
-    return view('pages.ui.index');
+    // Fetch stores (you can use pagination if there are a lot of stores)
+    $stores = \App\Models\Stores::all();
+    
+    return view('pages.ui.index', compact('stores'));
 });
 
 
@@ -58,7 +61,12 @@ Route::resource('special_offers', SpecialOffersController::class);
 Route::resource('menu_items', MenuItemsController::class);
 
 // Home Route
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    // Fetch stores (you can use pagination if there are a lot of stores)
+    $stores = \App\Models\Stores::all();
+    
+    return view('pages.ui.index', compact('stores'));
+})->name('home');
 
 // Dashboard Route (Protected with auth middleware)
 Route::get('/dashboard', function () {
@@ -87,13 +95,6 @@ Route::get('/contacts', function () {
 Route::get('/restaurants', function () {
     return view('pages.ui.restaurants');
 });
-Route::get('/menu', function () {
-    return view('pages.ui.menu');
-});
-Route::get('/home', function () {
-    return view('pages.ui.index');
-});
-
 
 //carl
 Route::get('/menu', [MenusController::class, 'showMenu'])->name('menu.show');
@@ -107,3 +108,8 @@ Route::get('/restaurants', function () {
     $stores = \App\Models\Stores::all();
     return view('pages.ui.restaurants', compact('reviews', 'stores'));
 });
+
+Route::get('/restaurants/{restaurant_id}',[MenusController::class, 'showMenu']);
+
+Route::get('/restaurants/{restaurant_id}/{menu_id}', [MenuItemsController::class, 'showMenuItems']);
+

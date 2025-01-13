@@ -226,78 +226,40 @@
         <div class="container">
           <h3 class ="oh-desktop"><span class="d-inline-block wow slideInDown">Our Restaurants</span></h3>
           <div class="row row-md row-30">
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInUp">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-1-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-leaf"></span>
-                    <h5 class="services-terri-title"><a href="#">Salads</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInDown">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-2-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-pizza"></span>
-                    <h5 class="services-terri-title"><a href="#">Pizzas</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInUp">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-3-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-hamburger"></span>
-                    <h5 class="services-terri-title"><a href="#">Burgers</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInDown">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-4-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-ice-cream"></span>
-                    <h5 class="services-terri-title"><a href="#">Desserts</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInUp">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-5-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-coffee-cup"></span>
-                    <h5 class="services-terri-title"><a href="#">Drinks</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <div class="oh-desktop">
-                <!-- Services Terri-->
-                <article class="services-terri wow slideInDown">
-                  <div class="services-terri-figure"><img src="{{url('frontend/images/menu-6-370x278.jpg')}}" alt="" width="370" height="278"/>
-                  </div>
-                  <div class="services-terri-caption"><span class="services-terri-icon linearicons-steak"></span>
-                    <h5 class="services-terri-title"><a href="#">Seafood</a></h5>
-                  </div>
-                </article>
-              </div>
-            </div>
+            @foreach ($stores as $store)
+              @php
+                // Define an array of possible icon classes
+                $icons = [
+                    'linearicons-pizza', 
+                    'linearicons-steak', 
+                    'linearicons-hamburger', 
+                    'linearicons-hotdog', 
+                    'linearicons-sausage', 
+                    'linearicons-chicken'
+                ];
+
+                // Randomly pick an icon class from the array
+                $randomIcon = $icons[array_rand($icons)];
+
+                // Check if the store has a logo, otherwise set the default image
+                $logoUrl = $store->logo ? asset('storage/' . $store->logo) : asset('storage/logos/default.png');
+              @endphp
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="oh-desktop">
+                        <!-- Services Terri-->
+                        <article class="services-terri wow slideInUp">
+                            <div class="services-terri-figure">
+                                <img src="{{ $logoUrl }}" alt="{{ $store->name }}" width="370" height="278"/>
+                            </div>
+                            <div class="services-terri-caption">
+                                <span class="services-terri-icon {{ $randomIcon }}"></span>
+                                <h5 class="services-terri-title"><a href="/restaurants/{{$store->id}}">{{ $store->name }}</a></h5>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            @endforeach
           </div>
         </div>
       </section>

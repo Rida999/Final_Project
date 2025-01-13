@@ -3947,6 +3947,13 @@ hr + .footer-social-list {
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
+.product-figure img {
+	width: 170px;
+	height: 162px;
+	object-fit: fit; /* Ensures the image fills the space without distortion */
+	display: block;    /* Removes extra spaces around the image */
+}
+
 .product-rating {
 	font-size: 17px;
 	color: #ffe745;
@@ -4127,78 +4134,100 @@ hr + .footer-social-list {
 *
 * Quotes
 */
+/* Ensure all service widgets (articles) are the same size */
 .services-terri {
-	position: relative;
-	text-align: center;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px; /* Set a fixed height to keep all widgets the same size */
+    background-color: #fff; /* Optional: for clean background */
+    border: 1px solid #ddd; /* Optional: for a subtle border */
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden; /* Prevent overflow */
+    transition: box-shadow 0.3s ease; /* Optional: smooth hover effect */
 }
 
+/* Ensure the overlay (before pseudo-element) does not affect the layout */
 .services-terri::before {
-	position: absolute;
-	content: '';
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(51, 51, 51, 0.55);
-	pointer-events: none;
-	z-index: 1;
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(51, 51, 51, 0.55);
+    pointer-events: none;
+    z-index: 1;
 }
 
+/* Image container for all widgets */
 .services-terri-figure {
-	display: block;
-	overflow: hidden;
+    display: block;
+    overflow: hidden;
+    flex-grow: 1; /* Allow figure to take available space */
+    height: 200px; /* Set a fixed height for uniformity */
 }
 
+/* Ensure all images fill the container without distortion */
 .services-terri-figure img {
-	display: inline-block;
-	width: 100%;
-	transition: all .2s ease;
+    display: inline-block;
+    width: 100%; /* Make the image fill the container width */
+    height: 100%; /* Ensure the image fills the container height */
+    object-fit: cover; /* Cover the entire space and maintain aspect ratio */
+    transition: all .2s ease; /* Smooth transition on hover */
 }
 
+/* Styling the caption area to keep the content centered */
 .services-terri-caption {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-	position: absolute;
-	content: '';
-	padding: 10px;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	pointer-events: none;
-	z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    pointer-events: none;
+    z-index: 1;
 }
 
+/* Ensure that the child elements inside the caption are clickable */
 .services-terri-caption > * {
-	pointer-events: auto;
+    pointer-events: auto;
 }
 
+/* Styling for the icon inside the widget */
 .services-terri-icon {
-	position: relative;
-	height: 63px;
-	width: 63px;
-	font-size: 34px;
-	line-height: 63px;
-	border-radius: 50%;
-	color: #ffffff;
-	background: #6046b6;
-	transition: all .2s ease-in-out;
-	z-index: 1;
+    position: relative;
+    height: 63px;
+    width: 63px;
+    font-size: 34px;
+    line-height: 63px;
+    border-radius: 50%;
+    color: #ffffff;
+    background: #6046b6;
+    transition: all .2s ease-in-out;
+    z-index: 1;
 }
 
+/* Optional: border around the icon */
 .services-terri-icon::after {
-	position: absolute;
-	content: '';
-	top: -5px;
-	right: -5px;
-	bottom: -5px;
-	left: -5px;
-	border-radius: inherit;
-	border: 5px solid rgba(255, 255, 255, 0.35);
-	z-index: -1;
+    position: absolute;
+    content: '';
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: inherit;
+    border: 5px solid rgba(255, 255, 255, 0.35);
+    z-index: -1;
 }
+
 
 .services-terri-title {
 	letter-spacing: .025em;
@@ -11922,9 +11951,7 @@ h3 + .tabs-custom {
 /*
  * Owl Navigation
  */
-.owl-nav.disabled {
-	display: none !important;
-}
+
 
 .owl-prev,
 .owl-next {
